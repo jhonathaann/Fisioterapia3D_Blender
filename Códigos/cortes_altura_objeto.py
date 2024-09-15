@@ -9,17 +9,16 @@ def cortes_horizontais(obj, intervalo_corte=1.0, tamanho_plano=10.0):
     
     # aplicando as transformaçoes de escala e rotaçao ao objeto
     bpy.ops.object.transform_apply(location=True, rotation=True, scale=True)
-
     # obtendo a matriz de transformacao do objeto
     matriz_transformacao = obj.matrix_world
 
     # convertendo os vertices para coordenadas globais e encontrando z min e Z max
-    vertices_mundo = [matriz_transformacao @ vert.cor for vert in obj.data.vertices]
+    vertices_mundo = [matriz_transformacao @ vert.co for vert in obj.data.vertices]
     min_z = min(vertices_mundo, key=lambda v: v.z).z
     max_z = max(vertices_mundo, key=lambda v: v.z).z
 
     # entrando no modo ediçao do objeto
-    bpy.context.view_layer.objects.ative = obj
+    bpy.context.view_layer.objects.active = obj
     bpy.ops.object.mode_set(mode='EDIT')
 
     # adicionando os planos de corte horizontais ao longo de eixo Z
