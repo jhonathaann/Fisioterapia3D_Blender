@@ -7,7 +7,7 @@ Tarefa: Usando Python, adicione um cubo na cena e mova-o 2 unidades no eixo Z.''
 import bpy
 
 # adicionando o objeto na cena
-bpy.ops.mesh.primitive_cube.add()
+bpy.ops.mesh.primitive_cube_add()
 
 # selecionando o objeto criado
 cubo = bpy.context.active_object
