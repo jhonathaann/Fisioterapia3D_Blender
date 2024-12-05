@@ -1,7 +1,6 @@
 '''a ideia é, dado um cubo na cena, criar um plano com que intersecte este cubo, de
 modo que no ponto de intersecao seja criado uma esfera'''
 
-
 import bpy
 import bmesh
 from mathutils import Vector
@@ -36,12 +35,13 @@ bm = bmesh.from_edit_mesh(cubo.data)
 plane_normal = plano.matrix_world.to_quaternion() @ Vector((0, 0, 1))
 plane_point = plano.matrix_world.translation
 
+# operacao de corte da malha do cubo com o plano
 geom, intersections = bmesh.ops.bisect_plane(
     bm,
-    geom=bm.verts[:] + bm.edges[:] + bm.faces[:],
-    plane_co=plane_point,
-    plane_no=plane_normal,
-    use_snap_center=True,
+    geom=bm.verts[:] + bm.edges[:] + bm.faces[:], # selecionando todos os vertices, arestas e faces
+    plane_co=plane_point,  # o ponto de origem do plano
+    plane_no=plane_normal,  # a normal do plano
+    use_snap_center=True,   # garante que o corte sera realizado centralizado
 )
 
 # saindo do modo edicao para aplicar as alteracoes
@@ -50,5 +50,5 @@ bpy.ops.object.mode_set(mode='OBJECT')
 
 # adicionando as esferas nas posicoes de intercçao
 for vert in intersections:
-    if isinstance(vert, bmesh.types.BMVert):
-        add_sphere(location=cubo.matrix_world @ vert.co)
+    if isinstance(vert, bmesh.types.BMVert):  # se o elemtno for um vertice
+        add_sphere(location=cubo.matrix_world @ vert.co)  # adiciona uma esfera na posicao do vertice
