@@ -3,7 +3,7 @@ import bpy
 # parametros do cilindro
 raio = 1.0     # raio da base do cilindro
 altura = 2.0   # altura do cilindro
-vertices = 10  # numero de vertices para a base circular
+vertices = 32  # numero de vertices para a base circular
 localizacao = (0,0,0)  # localizacao do cilindro no espcaço
 
 # criando o cilindro
