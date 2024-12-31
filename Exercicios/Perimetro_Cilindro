@@ -1,0 +1,23 @@
+import bpy
+import math
+
+###  assumindo que esse cilindro tem uma base circular ###
+
+# salvando as informacoes do cilindro 
+cilindro = bpy.data.context.get('Cylinder')
+
+if cilindro:
+
+    dimensoes = cilindro.dimensions
+
+    raio = dimensoes[0]/2
+    altura = dimensoes[2]
+
+    perimetro_base = 2 * math.pi * raio
+    perimetro_lateral = 2 * (altura + perimetro_base)
+
+    print(f"Perimetro do cilndro {perimetro_base+perimetro_lateral}")
+
+else:
+    
+    print("Nao foi encontrado nenhum cilindro na cena")    
