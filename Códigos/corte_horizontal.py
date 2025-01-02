@@ -2,7 +2,7 @@ import bpy
 import bmesh
 import mathutils
 
-def corte_na_vertical(obj):
+def corte_na_horizontal(obj):
     # verifique se o objeto é do tipo MESH
     if obj.type != 'MESH':
         print("Selecione um objeto do tipo MESH.")
@@ -16,7 +16,7 @@ def corte_na_vertical(obj):
     bbw = [matriz_transformacao @ mathutils.Vector(corner) for corner in bb]
     
     # calcule o valor médio de Y na bounding box
-    min_z = (min(corner.y for corner in bbw) + max(corner.y for corner in bbw)) / 2
+    min_z = (min(corner.z for corner in bbw) + max(corner.z for corner in bbw)) / 2
     print("Mid Y:", min_z)
     
     # entre no modo de edição
@@ -27,7 +27,7 @@ def corte_na_vertical(obj):
     # Use o bmesh para manipulação de malha
     bm = bmesh.from_edit_mesh(obj.data)
     
-    vertices_removidos = [v for v in bm.verts if (matriz_transformacao @ v.co).y > min_z]
+    vertices_removidos = [v for v in bm.verts if (matriz_transformacao @ v.co).z > min_z]
     
     bmesh.ops.delete(bm, geom=vertices_removidos, context='VERTS')
     
@@ -41,4 +41,4 @@ def corte_na_vertical(obj):
 obj = bpy.context.active_object
 
 # aplique o corte na malha
-corte_na_vertical(obj)
+corte_na_horizontal(obj)
